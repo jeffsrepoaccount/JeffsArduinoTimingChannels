@@ -16,11 +16,8 @@ Single Channel Exaxmple
 #include <JeffsArduinoTimingChannels.h>
 
 #define CHANNEL_OUTPUT_PIN      7
-// By default:
 // true indicates a channel should initially be ON
 // false indicates a channel should initially be OFF
-// TODO: Allow a channel to dictate it's ON state.
-// Things such as LEDs are ON when HIGH, but relays are ON when LOW
 #define CHANNEL_INITIAL_STATE   true
 
 // Timing schedules
@@ -33,6 +30,7 @@ Single Channel Exaxmple
 TimerSchedule scheduler;
 
 void setup() {
+    // This constructor creates a channel that is ON when HIGH, useful for things such as LEDs.
     TimedObject channel1 (CHANNEL_OUTPUT_PIN, CHANNEL_ON_SECONDS, CHANNEL_OFF_SECONDS, CHANNEL_INITIAL_STATE);
     scheduler.setChannel(TIMER_CHANNEL_1, channel1);
 
@@ -48,12 +46,13 @@ void loop() {
 }
 ```
 
-Multiple Channel Exaxmple
+Multi-Channel Example for Relays
 
 ```
 #include <JeffsArduinoTimingChannels.h>
 
-// A single light channel triggering a relay, initially on and running for 8 hours followed by 16 hours of being off.
+// A single light channel triggering a relay, initially on 
+// and running for 8 hours followed by 16 hours of being off.
 #define CHANNEL1_OUTPUT_PIN     7
 #define CHANNEL1_ON_SECONDS     8 * 60 * 60     // 8 hrs
 #define CHANNEL1_OFF_SECONDS    16 * 60 * 60    // 16 hrs
@@ -61,7 +60,8 @@ Multiple Channel Exaxmple
 // Relays switching high voltage circuits activate on LOW
 #define CHANNEL1_ON_IS_HIGH        false
 
-// A water pump channel triggering a relay, initially off for 1 hour followed by 1 minute of running.
+// A water pump channel triggering a relay, initially off 
+// for 1 hour followed by 1 minute of running.
 #define CHANNEL2_OUTPUT_PIN         6
 #define CHANNEL2_ON_SECONDS         1 * 60          // 1 min
 #define CHANNEL2_OFF_SECONDS        1 * 60 * 60     // 1 hr
@@ -72,8 +72,20 @@ Multiple Channel Exaxmple
 TimerSchedule scheduler;
 
 void setup() {
-    TimedObject channel1 (CHANNEL1_OUTPUT_PIN, CHANNEL1_ON_SECONDS, CHANNEL1_OFF_SECONDS, CHANNEL1_INITIAL_STATE, CHANNEL1_ON_IS_HIGH);
-    TimedObject channel2 (CHANNEL2_OUTPUT_PIN, CHANNEL2_ON_SECONDS, CHANNEL2_OFF_SECONDS, CHANNEL2_INITIAL_STATE, CHANNEL2_SWITCHES_NORMALLY);
+    TimedObject channel1 (
+        CHANNEL1_OUTPUT_PIN,
+        CHANNEL1_ON_SECONDS,
+        CHANNEL1_OFF_SECONDS,
+        CHANNEL1_INITIAL_STATE,
+        CHANNEL1_ON_IS_HIGH
+    );
+    TimedObject channel2 (
+        CHANNEL2_OUTPUT_PIN,
+        CHANNEL2_ON_SECONDS,
+        CHANNEL2_OFF_SECONDS,
+        CHANNEL2_INITIAL_STATE,
+        CHANNEL2_SWITCHES_NORMALLY
+    );
 
     scheduler.setChannel(TIMER_CHANNEL_1, channel1);
     scheduler.setChannel(TIMER_CHANNEL_2, channel2);
