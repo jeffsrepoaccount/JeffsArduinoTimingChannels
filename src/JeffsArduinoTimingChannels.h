@@ -1,8 +1,7 @@
 /*
   JeffsArduinoTimingChannels.h
-  Library for timing Arduino output pins in separately timed channels. Built on top of arduino-timer by Michael Contreras.
+  Library for timing Arduino output pins in separately timed channels. Built on top of arduino-timer.
   Created by Jeff Lambert October 2021
-  Released into the universe for it to do with as it pleases.
 */
 #ifndef JeffsArduinoTimingChannels_h
 #define JeffsArduinoTimingChannels_h

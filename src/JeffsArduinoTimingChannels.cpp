@@ -46,6 +46,7 @@ bool TimedObject::turnOn() {
         digitalWrite(_outputPin, LOW);
     }
 
+    // this line needs to be a callback to an instance method
     _timer.in(_onTimeSecs * 1000, this.turnOff);
     return true;
 }
@@ -57,6 +58,7 @@ bool TimedObject::turnOff() {
         digitalWrite(_outputPin, HIGH);
     }
 
+    // this line needs to be a callback to an instance method
     _timer.in(_offTimeSecs * 1000, this.turnOn);
     return true;
 }
@@ -72,8 +74,7 @@ void TimedObject::begin() {
 }
 
 void TimedObject::end() {
-    digitalWrite(_outputPin, LOW);
-    pinMode(_outputPin, OUTPUT);
+    turnOff();
     _timer.cancel();
 }
 

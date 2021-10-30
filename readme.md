@@ -6,7 +6,7 @@ Encapsulates separate output pins into different timed object channels that will
 
 Any application that needs the ability to have different things in an ON state for a period of time followed by the OFF state for a period of time in a repeating fashion. This library currently does not assume an RTC module is available or offer support for one, and is inappropriate for any application requiring specific time of day activation or deactivation.
 
-An approach to the setup of how long something can be on and off can be used, and that is to ensure that the sum of the two times add up to exactly 24 hours. The drawback to this approach would be you only get 1 activation/deactivation cycle per day, and, depending on how accurate you need to be, must initially power on the board only at a specific time of day.
+An approach to the setup of how long something can be on and off can be used, and that is to ensure that the sum of the two times add up to a value divisible into 24 hours. The drawback to this that you must power on the board at a specific time of day, which may be impossible depending on how accurate you need to be.
 
 ## Usage
 
@@ -61,10 +61,10 @@ Multi-Channel Example for Relays
 #define CHANNEL1_ON_IS_HIGH        false
 
 // A water pump channel triggering a relay, initially off 
-// for 1 hour followed by 1 minute of running.
+// for 3 hours followed by 1 minute of running.
 #define CHANNEL2_OUTPUT_PIN         6
 #define CHANNEL2_ON_SECONDS         1 * 60          // 1 min
-#define CHANNEL2_OFF_SECONDS        1 * 60 * 60     // 1 hr
+#define CHANNEL2_OFF_SECONDS        3 * 60 * 60     // 3 hrs
 #define CHANNEL2_INITIAL_STATE      false
 // Another way to think of this parameter
 #define CHANNEL2_SWITCHES_NORMALLY  false
@@ -120,6 +120,32 @@ Turns off all channels and stops the timers.
 **void endChannel(int channel);**
 
 Turns off a specific channel and stops its timer.
+
+## Timed Object Constructors
+
+By default, we assume things are normal and when ON the output pin should be HIGH.
+
+```
+
+TimedObject(
+    int outputPin,
+    int onTimeSecs,
+    int offTimeSecs,
+    bool initialState
+);
+```
+
+Some things, such as relays, may not work this way. When they are ON the output pin should be LOW.
+
+```
+TimedObject(
+    int outputPin,
+    int onTime,
+    int offTime,
+    bool initialState,
+    bool switchesNormally
+);
+```
 
 ---
 

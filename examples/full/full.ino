@@ -47,7 +47,6 @@ void setup() {
 }
 
 void loop() {
-    // Must call tickTimers() every loop.
     scheduler.tickTimers();
     delay(1000);
 }
