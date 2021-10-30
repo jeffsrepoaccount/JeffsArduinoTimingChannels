@@ -1,7 +1,7 @@
 # Jeffs Arduino Timing Channels
 ---
 
-Encapsulates separate output pins into different timed object channels that will oscillate between on and off states on different schedules.
+Encapsulates separate output pins into different timed object channels that will oscillate between on and off states on different schedules. Built on top of [arduino-timer](https://github.com/contrem/arduino-timer) by Michael Contreras.
 
 ## Use Case
 
@@ -78,3 +78,15 @@ void loop() {
     delay(1000);
 }
 ```
+
+## Available Scheduler Methods
+
+*void setChannel(int channel, TimedObject object);* - Adds an object and sets it into the specific channel.
+
+*void begin();* - Should be called in setup(). Puts channels into their initial state and starts the timers.
+
+*void tickTimers();* - Must be called once every loop.
+
+*void end();* - Turns off all channels and stops the timers.
+
+*void endChannel(int channel);* - Turns off a specific channel and stops its timer.

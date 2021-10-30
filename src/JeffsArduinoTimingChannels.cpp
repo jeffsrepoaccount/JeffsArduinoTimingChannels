@@ -38,7 +38,7 @@ void TimedObject::start() {
     }
 }
 
-void TimedObject::stop() {
+void TimedObject::end() {
     digitalWrite(_outputPin, LOW);
     pinMode(_outputPin, OUTPUT);
     _timer.cancel();
@@ -74,14 +74,14 @@ int TimerSchedule::numChannels()
     return (int)(sizeof channels / sizeof channels[0]);
 }
 
-void TimerSchedule::stopChannels()
+void TimerSchedule::end()
 {
     for (int i = 0; i < numChannels(); i++) {
         channels[i].stop();
     }
 }
 
-void TimerSchedule::stopChannel(int channel)
+void TimerSchedule::endChannel(int channel)
 {
-
+    channels[i].end();
 }

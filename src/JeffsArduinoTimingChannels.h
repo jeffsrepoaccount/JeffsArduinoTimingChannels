@@ -42,6 +42,9 @@ class TimerSchedule
 
     public:
         TimerScheduler();
+        /**
+         * Adds an object and sets it into the specific channel.
+         */
         void setChannel(int channel, TimedObject object);
         /**
          * Puts channels into their initial state and starts the timers.
@@ -55,11 +58,11 @@ class TimerSchedule
         /**
          * Turns off all channels and stops the timers
          */
-        void stopChannels();
+        void end();
         /**
          * Turns off a specific channel and stops its timer
          */
-        void stopChannel(int channel);
+        void endChannel(int channel);
     private:
         int numChannels();
 };
