@@ -19,20 +19,21 @@
 class TimedObject
 {
     private:
-        int _outputPin, _onTime, _offTime;
+        int _outputPin, _onTimeSecs, _offTimeSecs;
         bool _initialState;
         Timer<> _timer;
     public:
+        TimedObject();
         TimedObject(
             int outputPin,
             int onTime,
             int offTime,
             bool initialState
         );
-        void turnOn();
-        void turnOff();
-        void start();
-        void stop();
+        bool turnOn();
+        bool turnOff();
+        void begin();
+        void end();
         void tickTimer();
 };
 
@@ -41,7 +42,7 @@ class TimerSchedule
     TimedObject channels[MAX_TIMING_CHANNELS];
 
     public:
-        TimerScheduler();
+        TimerSchedule();
         /**
          * Adds an object and sets it into the specific channel.
          */

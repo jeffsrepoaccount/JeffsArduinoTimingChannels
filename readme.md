@@ -81,12 +81,17 @@ void loop() {
 
 ## Available Scheduler Methods
 
-*void setChannel(int channel, TimedObject object);* - Adds an object and sets it into the specific channel.
+**void setChannel(int channel, TimedObject object);** 
+Adds an object and sets it into the specific channel.
 
-*void begin();* - Should be called in setup(). Puts channels into their initial state and starts the timers.
+**void begin();**
+Should be called in setup(). Puts channels into their initial state and starts the timers.
 
-*void tickTimers();* - Must be called once every loop.
+**void tickTimers();**
+Must be called once every loop.
 
-*void end();* - Turns off all channels and stops the timers.
+**void end();**
+Turns off all channels and stops the timers.
 
-*void endChannel(int channel);* - Turns off a specific channel and stops its timer.
+**void endChannel(int channel);**
+Turns off a specific channel and stops its timer.

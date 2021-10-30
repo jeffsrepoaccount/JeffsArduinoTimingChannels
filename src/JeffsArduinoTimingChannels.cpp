@@ -2,33 +2,37 @@
 #include <arduino-timer.h>
 #include <JeffsArduinoTimingChannels.h>
 
+TimedObject::TimedObject() {
+
+}
+
 TimedObject::TimedObject(
     int outputPin,
-    int onTime,
-    int offTime,
+    int onTimeSecs,
+    int offTimeSecs,
     bool initialState
 ) {
     _outputPin = outputPin;
-    _onTime = onTime;
-    _offTime = offTime;
+    _onTimeSecs = onTimeSecs;
+    _offTimeSecs = offTimeSecs;
     _initialState = initialState;
 
     _timer = timer_create_default();
 }
 
-void TimedObject::turnOn() {
+bool TimedObject::turnOn() {
     digitalWrite(_outputPin, HIGH);
-    _timer.in(_onTimeSecs * 1000, this->turnChannelOff);
+    _timer.in(_onTimeSecs * 1000, this.turnOff);
     return true;
 }
 
-void TimedObject::turnOff() {
+bool TimedObject::turnOff() {
     digitalWrite(_outputPin, LOW);
-    _timer.in(_offTimeSecs * 1000, this->turnChannelOn);
+    _timer.in(_offTimeSecs * 1000, this.turnOn);
     return true;
 }
 
-void TimedObject::start() {
+void TimedObject::begin() {
     pinMode(_outputPin, OUTPUT);
 
     if(_initialState) {
@@ -48,7 +52,10 @@ void TimedObject::tickTimer() {
     _timer.tick();
 }
 
-TimerScheduler::TimerScheduler(){}
+TimerSchedule::TimerSchedule()
+{
+    TimedObject channels[MAX_TIMING_CHANNELS];
+}
 
 void TimerSchedule::setChannel(int channel, TimedObject object)
 {
@@ -58,7 +65,7 @@ void TimerSchedule::setChannel(int channel, TimedObject object)
 void TimerSchedule::begin()
 {
     for (int i = 0; i < numChannels(); i++) {
-        channels[i].start();
+        channels[i].begin();
     }
 }
 
@@ -77,11 +84,11 @@ int TimerSchedule::numChannels()
 void TimerSchedule::end()
 {
     for (int i = 0; i < numChannels(); i++) {
-        channels[i].stop();
+        channels[i].end();
     }
 }
 
 void TimerSchedule::endChannel(int channel)
 {
-    channels[i].end();
+    channels[channel].end();
 }
