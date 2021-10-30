@@ -17,17 +17,46 @@ TimedObject::TimedObject(
     _offTimeSecs = offTimeSecs;
     _initialState = initialState;
 
+    _switchesNormally = true;
+
+    _timer = timer_create_default();
+}
+
+TimedObject::TimedObject(
+    int outputPin,
+    int onTimeSecs,
+    int offTimeSecs,
+    bool initialState,
+    bool switchesNormally = true
+) {
+    _outputPin = outputPin;
+    _onTimeSecs = onTimeSecs;
+    _offTimeSecs = offTimeSecs;
+    _initialState = initialState;
+
+    _switchesNormally = switchesNormally;
+
     _timer = timer_create_default();
 }
 
 bool TimedObject::turnOn() {
-    digitalWrite(_outputPin, HIGH);
+    if(_switchesNormally) {
+        digitalWrite(_outputPin, HIGH);
+    } else {
+        digitalWrite(_outputPin, LOW);
+    }
+
     _timer.in(_onTimeSecs * 1000, this.turnOff);
     return true;
 }
 
 bool TimedObject::turnOff() {
-    digitalWrite(_outputPin, LOW);
+    if(_switchesNormally) {
+        digitalWrite(_outputPin, LOW);
+    } else {
+        digitalWrite(_outputPin, HIGH);
+    }
+
     _timer.in(_offTimeSecs * 1000, this.turnOn);
     return true;
 }

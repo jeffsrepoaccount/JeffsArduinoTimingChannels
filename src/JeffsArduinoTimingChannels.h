@@ -20,7 +20,7 @@ class TimedObject
 {
     private:
         int _outputPin, _onTimeSecs, _offTimeSecs;
-        bool _initialState;
+        bool _initialState, _switchesNormally;
         Timer<> _timer;
     public:
         TimedObject();
@@ -29,6 +29,13 @@ class TimedObject
             int onTime,
             int offTime,
             bool initialState
+        );
+        TimedObject(
+            int outputPin,
+            int onTime,
+            int offTime,
+            bool initialState,
+            bool switchesNormally
         );
         bool turnOn();
         bool turnOff();
