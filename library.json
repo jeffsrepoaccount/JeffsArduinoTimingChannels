@@ -1,0 +1,15 @@
+{
+  "name": "JeffsArduinoTimingChannels",
+  "keywords": "timing",
+  "description": "Library for timing Arduino output pins in separate timed channels. Built on top of arduino-timer by Michael Contreras.",
+  "homepage": "https://github.com/jeffsrepoaccount/JeffsArduinoTimingChannels",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeffsrepoaccount/JeffsArduinoTimingChannels.git"
+  },
+  "version": "0.1",
+  "authors": {
+    "name": "Jeff Lambert",
+    "url": "https://github.com/jeffsrepoaccount/"
+  }
+}
